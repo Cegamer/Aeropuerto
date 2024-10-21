@@ -14,7 +14,7 @@ document.getElementById("toggle-btn").addEventListener("click", function() {
         toggleBtn.textContent = "¿Ya tienes cuenta? Inicia sesión";
 
         // Cambiar imagen al lado izquierdo
-        leftImage.src = "https://via.placeholder.com/300";  // Cambiar la imagen para el registro
+        leftImage.src = "../resources/aeropuerto2.jpeg";  // Cambiar la imagen para el registro
     } else {
         registerForm.classList.add("d-none");
         loginForm.classList.remove("d-none");
@@ -23,7 +23,7 @@ document.getElementById("toggle-btn").addEventListener("click", function() {
         toggleBtn.textContent = "¿No tienes cuenta? Regístrate";
 
         // Cambiar imagen al lado izquierdo
-        leftImage.src = "https://via.placeholder.com/300";  // Imagen original para el login
+        leftImage.src = "../resources/aeropuerto3.jpg";  // Imagen original para el login
     }
 });
 
