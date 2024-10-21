@@ -1,1 +1,1 @@
-const apiUrl = 'http://aeropuertocesar.somee.com/api/'
+const apiUrl = 'https://aeropuertocesar.somee.com/api/'
