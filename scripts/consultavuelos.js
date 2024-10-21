@@ -78,7 +78,10 @@ function mostrarVuelos(vuelos) {
 
         // Array de imágenes aleatorias (puedes agregar más imágenes)
         const imagenes = [
-            "https://via.placeholder.com/150",
+            "../resources/ciudad1.jpeg",
+            "../resources/ciudad2.jpeg",
+            "../resources/ciudad3.jpeg",
+
 
         ];
         const imagenAleatoria = imagenes[Math.floor(Math.random() * imagenes.length)];
@@ -89,7 +92,7 @@ function mostrarVuelos(vuelos) {
 
         card.innerHTML = `
             
-            <img src="${imagenAleatoria}" alt="Vuelo">
+            <img src="${imagenAleatoria}"  alt="Vuelo">
             <h3>${nombreOrigen} a ${nombreDestino}</h3>
             <p><strong>Fecha de Salida:</strong> ${new Date(vuelo.fechaSalida).toLocaleDateString()}</p>
             <p><strong>Hora de Salida:</strong> ${vuelo.horaSalida}</p>
