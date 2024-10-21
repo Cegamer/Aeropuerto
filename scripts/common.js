@@ -1,1 +1,1 @@
-const apiUrl = 'https://localhost:7281/api/'
+const apiUrl = 'http://aeropuertocesar.somee.com/api/'
