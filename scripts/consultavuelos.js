@@ -7,11 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         // Cargar información del usuario
         obtenerInformacionUsuario(idUsuario);
-        // Cargar ciudades
-        cargarCiudades();
-        // Cargar todos los vuelos
-        cargarVuelos();
-        
+
+        // Asegurarse de que se carguen las ciudades antes de los vuelos
+        Promise.all([cargarCiudades()])
+            .then(() => {
+                cargarVuelos(); // Cargar los vuelos una vez que las ciudades estén listas
+            })
+            .catch(error => console.error("Error al cargar ciudades o vuelos:", error));
+
         // Manejar el botón de búsqueda
         document.getElementById("btn-buscar").addEventListener("click", filtrarVuelos);
     }
@@ -19,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Función para obtener la información del usuario
 function obtenerInformacionUsuario(id) {
-    fetch(apiUrl + "Usuarios/"+id)
+    fetch(apiUrl + "Usuarios/" + id)
         .then(response => response.json())
         .then(data => {
             document.getElementById("nombre-usuario").textContent = data.nombre;
@@ -33,7 +36,7 @@ let ciudadMap = {};
 
 // Función para cargar ciudades en los selectores
 function cargarCiudades() {
-    fetch(apiUrl + "Ciudades")
+    return fetch(apiUrl + "Ciudades")
         .then(response => response.json())
         .then(ciudades => {
             const origenSelect = document.getElementById("selector-origen");
@@ -81,18 +84,15 @@ function mostrarVuelos(vuelos) {
             "../resources/ciudad1.jpeg",
             "../resources/ciudad2.jpeg",
             "../resources/ciudad3.jpeg",
-
-
         ];
         const imagenAleatoria = imagenes[Math.floor(Math.random() * imagenes.length)];
 
-        // Obtener nombres de ciudad
+        // Obtener nombres de ciudad desde el mapa
         const nombreOrigen = ciudadMap[vuelo.origen];
         const nombreDestino = ciudadMap[vuelo.destino];
 
         card.innerHTML = `
-            
-            <img src="${imagenAleatoria}"  alt="Vuelo">
+            <img src="${imagenAleatoria}" alt="Vuelo">
             <h3>${nombreOrigen} a ${nombreDestino}</h3>
             <p><strong>Fecha de Salida:</strong> ${new Date(vuelo.fechaSalida).toLocaleDateString()}</p>
             <p><strong>Hora de Salida:</strong> ${vuelo.horaSalida}</p>
@@ -109,6 +109,7 @@ function mostrarVuelos(vuelos) {
         vuelosContainer.appendChild(card);
     });
 }
+
 // Función para filtrar vuelos
 function filtrarVuelos() {
     const origenId = document.getElementById("selector-origen").value;
@@ -122,7 +123,7 @@ function filtrarVuelos() {
                 // Comprobar que los valores de origen y destino coincidan
                 const coincideOrigen = vuelo.origen === origenId;
                 const coincideDestino = vuelo.destino === destinoId;
-                
+
                 // Comprobar que la fecha de salida coincida si se seleccionó una fecha
                 const coincideFecha = !fechaSalida || new Date(vuelo.fechaSalida).toISOString().split('T')[0] === fechaSalida;
 
